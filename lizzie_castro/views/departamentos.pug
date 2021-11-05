@@ -1,0 +1,62 @@
+extends base.pug
+
+block title 
+    title DEPARTAMENTOS
+
+block container 
+    .container.mt-5
+        h3.text-orange.mb-4.fw-bold 
+            .row
+                .col-9
+                    .fw-bold DEPARTAMENTOS 
+                .col-3.text-center
+                    a.text-orange.fw-bold(href="/empleados" style="text-decoration: none") EMPLEADOS
+        
+        .row
+            .col-3
+                    //- Ruta de action dependera de si exite el parametro de departamento o no.
+                    form(action=departamento ? "/editarDepartamento":"/crearDepartamento"  method='POST')
+                        input#departamentoid.form-control(type='text' name='departamentoid' value=departamento?departamento.iddepartamento:null hidden)
+
+                        .mb-3
+                            label.fw-bold(for='departamento') Departamento
+                            input#departamento.form-control(type='text' name='departamento' required value=departamento?departamento.departamento:null autofocus)
+                        .mb-3
+                            label.fw-bold(for='descripcion') Descripcion
+                            textarea#descripcion.form-control(type='text' name='descripcion' rows="8"  required) #{departamento?departamento.descripcion:null}
+                        .mb-3
+                            .d-grid.gap-2
+                                input.btn.btn-orange(type='submit' value= departamento ? 'ACTUALIZAR DEPARTAMENTO':'REGISTRAR DEPARTAMENTO' onclick= departamento ?"if (!confirm(`¿Desea actualizar los datos del departamento "+ departamento.iddepartamento + " - "+ departamento.departamento+"?`)) return false;":null )
+
+
+            //- --------------------------------DATOS DE DEPARTAMENTOS
+            .col-9
+                    form(action="/departamentos" method="GET")
+                        input#q.form-control(type='search' name='q' value=q?q:"" placeholder='Buscar departamentos')
+                   
+                    h4.mt-3.mb-3.fw-bold Departamentos registrados: #{departamentos.length}
+                    form(action='' method='POST')
+                        table.table.table-hover
+                            thead
+                                tr
+                                    th ID
+                                    th DEPARTAMENTO
+                                    th DESCRIPCIÓN
+                                    th.text-center ACCIONES
+                            tbody
+                                if departamentos.length
+                                    each d in departamentos
+                                        tr
+                                            td.fw-bold #{d.iddepartamento}
+                                            td #{d.departamento}
+                                            td #{d.descripcion}
+                                            td.text-center
+                                                //- https://www.w3schools.com/tags/att_button_formaction.asp
+                                                //- https://www.htmlquick.com/es/reference/tags/button-submit.html
+                                                button.btn(type="submit" formaction="/eliminarDepartamento" name="iddepartamento" value=d.iddepartamento onclick="if (!confirm(`Confirme la eliminacion del departamento "+ d.iddepartamento +"`)) return false;" ) 
+                                                    span.fas.fa-trash-alt.text-gray
+                                                button.btn(type="submit" formaction="/departamentos" name="iddepartamento" value=d.iddepartamento) 
+                                                    span.fas.fa-edit.text-orange
+                                else
+                                    tr
+                                        td.text-orange.text-center.fw-bold(colspan='4') No hay departamentos

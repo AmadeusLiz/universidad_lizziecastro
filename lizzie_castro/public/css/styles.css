@@ -1,0 +1,25 @@
+.text-orange {
+    color: #ff5722
+}
+
+.text-gray {
+    color: #484848
+}
+
+.text-orange:hover {
+    color: #c41c00
+}
+
+.text-gray:hover {
+    color: #212121
+}
+
+.btn-orange {
+    background-color: #ff5722;
+    color: white;
+    font-weight: bold;
+}
+
+.btn-orange:hover {
+    color: #ffbb93;
+}

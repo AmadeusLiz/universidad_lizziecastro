@@ -1,0 +1,84 @@
+extends base.pug
+
+block title 
+    title EMPLEADOS
+
+block container 
+    .container.mt-5
+        h3.text-orange.mb-4
+            .row
+                .col-9
+                    .fw-bold EMPLEADOS
+                .col-3.text-center
+                    a.text-orange.fw-bold(href="/departamentos" style="text-decoration: none") DEPARTAMENTOS
+        
+        .row
+            .col-3
+                    //- Ruta de action dependera de si exite el parametro de empleado o no.
+                    form(action=empleado ? "/editarEmpleado":"/crearEmpleado"  method='POST')
+                    
+                        input#empleadoid.form-control(type='text' name='empleadoid' value=empleado?empleado.idempleado:null hidden)
+
+                        .mb-3
+                            label.fw-bold(for='departamento') Departamento
+                            select#departamento.form-select(name='departamento')
+                                each d in departamentos 
+                                    if empleado && empleado.fkiddepartamento == d.iddepartamento 
+                                        option(value=d.iddepartamento selected) #{d.departamento}
+                                    else
+                                        option(value=d.iddepartamento) #{d.departamento}
+
+                        .mb-3
+                            label.fw-bold(for='nombre') Nombre
+                            input#nombre.form-control(type='text' name='nombre' required autofocus  value=empleado?empleado.nombre:null)
+                        .mb-3
+                            label.fw-bold(for='apellido') Apellido
+                            input#apellido.form-control(type='text' name='apellido' required value=empleado?empleado.apellido:null)
+                        .mb-3
+                            label.fw-bold(for='edad') Edad
+                            input#edad.form-control(type='number' name='edad' min="21"  placeholder="21" required value=empleado?empleado.edad:21)
+                        .mb-3
+                            label.fw-bold(for='sueldo') Sueldo
+                            input#sueldo.form-control(type='number' step=0.01 name='sueldo' required value=empleado?empleado.sueldo:null)
+                        .mb-3
+                            .d-grid.gap-2
+                                input.btn.btn-orange(type='submit' value= empleado ? 'ACTUALIZAR EMPLEADO':'REGISTRAR EMPLEADO' onclick= empleado ?"if (!confirm(`¿Desea actualizar los datos del empleado "+ empleado.idempleado + " - "+ empleado.nombre+"?`)) return false;":null )
+
+
+            //- --------------------------------DATOS DE PARTICIPANTES
+            .col-9
+                    form(action="/empleados" method="GET")
+                        input#q.form-control(type='search' name='q' value=q?q:"" placeholder='Buscar empleados')
+
+                    h4.mt-3.mb-3.fw-bold Empleados registrados: #{empleados.length}
+                    form(action='' method='POST')
+                        table.table.table-hover
+                            thead
+                                tr
+                                    th ID
+                                    th DEPARTAMENTO
+                                    th NOMBRE
+                                    th APELLIDO
+                                    th EDAD
+                                    th SUELDO (LPS)
+                                    th.text-center ACCIONES
+                            tbody
+                                if empleados.length
+                                    each e in empleados
+                                        tr
+                                            td.fw-bold #{e.idempleado}
+                                            td #{e.departamento}
+                                            td #{e.nombre}
+                                            td #{e.apellido}
+                                            td #{e.edad}
+                                            td #{e.sueldo}
+                                            td.text-center
+                                                //- https://www.w3schools.com/tags/att_button_formaction.asp
+                                                //- https://www.htmlquick.com/es/reference/tags/button-submit.html
+                                                button.btn(type="submit" formaction="/eliminarEmpleado" name="idempleado" value=e.idempleado onclick="if (!confirm(`Confirme la eliminacion del empleado "+ e.idempleado +"`)) return false;" ) 
+                                                    span.fas.fa-trash-alt.text-gray
+                                                button.btn(type="submit" formaction="/empleados" name="idempleado" value=e.idempleado) 
+                                                    span.fas.fa-edit.text-orange
+                                else
+                                    tr
+                                        td.text-orange.text-center.fw-bold(colspan='7') No hay empleados

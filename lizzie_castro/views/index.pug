@@ -1,0 +1,32 @@
+extends base.pug
+
+block title 
+    title Tarea 1
+
+block container 
+    .container.mt-5
+        h1.fw-bold.text-orange TAREA #1 II PARCIAL 
+        h4.text-gray.mb-5.fw-bold SEMINARIO-TALLER DE SOFTWARE
+
+        h3.text-center.text-orange.mt-5.fw-bold LIZZIE GISELLE CASTRO MARADIAGA 0501199907110
+
+        .row.mt-5 
+            //- https://getbootstrap.com/docs/4.0/components/buttons/#button-tags
+            .col-6
+                .d-grid.gap-2
+                    a.btn.btn-orange(href="/departamentos" role="button") IR A DEPARTAMENTOS
+                .text-center 
+                    lord-icon(
+                        src="https://cdn.lordicon.com/soseozvi.json"
+                        trigger="loop"
+                        colors="primary:#ff5722,secondary:#913710"
+                        style="width:250px;height:250px")
+            .col-6 
+                .d-grid.gap-2
+                    a.btn.btn-orange(href="/empleados" role="button") IR A EMPLEADOS
+                .text-center 
+                    lord-icon(
+                        src="https://cdn.lordicon.com/uukerzzv.json"
+                        trigger="loop"
+                        colors="primary:#ff5722 ,secondary:#913710"
+                        style="width:250px;height:250px")
