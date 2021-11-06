@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `empresa`
+-- Base de datos: `Lizzie_Castro_db`
 --
 
 -- --------------------------------------------------------
@@ -26,8 +26,9 @@ SET time_zone = "+00:00";
 --
 -- Estructura de tabla para la tabla `departamentos`
 --
+CREATE DATABASE Lizzie_Castro_db
 
-CREATE TABLE `departamentos` (
+CREATE TABLE `Lizzie_Castro_db`.`departamentos` (
   `iddepartamento` int(11) NOT NULL,
   `departamento` varchar(70) COLLATE utf8_bin NOT NULL,
   `descripcion` varchar(100) COLLATE utf8_bin NOT NULL
@@ -37,7 +38,7 @@ CREATE TABLE `departamentos` (
 -- Volcado de datos para la tabla `departamentos`
 --
 
-INSERT INTO `departamentos` (`iddepartamento`, `departamento`, `descripcion`) VALUES
+INSERT INTO `Lizzie_Castro_db`.`departamentos` (`iddepartamento`, `departamento`, `descripcion`) VALUES
 (1, 'IT', 'Departamento de tecnología e información'),
 (2, 'Finanzas', 'Departamento de contabilidad'),
 (3, 'Recursos Humanos', 'Departamento de recursos humanos');
@@ -48,7 +49,7 @@ INSERT INTO `departamentos` (`iddepartamento`, `departamento`, `descripcion`) VA
 -- Estructura de tabla para la tabla `empleados`
 --
 
-CREATE TABLE `empleados` (
+CREATE TABLE `Lizzie_Castro_db`.`empleados` (
   `idempleado` int(11) NOT NULL,
   `fkiddepartamento` int(11) DEFAULT NULL,
   `nombre` varchar(70) COLLATE utf8_bin NOT NULL,
@@ -61,7 +62,7 @@ CREATE TABLE `empleados` (
 -- Volcado de datos para la tabla `empleados`
 --
 
-INSERT INTO `empleados` (`idempleado`, `fkiddepartamento`, `nombre`, `apellido`, `edad`, `sueldo`) VALUES
+INSERT INTO `Lizzie_Castro_db`.`empleados` (`idempleado`, `fkiddepartamento`, `nombre`, `apellido`, `edad`, `sueldo`) VALUES
 (1, 1, 'Karla', 'Lainez', 30, 13400.2),
 (2, 1, 'Andrea', 'Benitez', 22, 12000.5),
 (3, 2, 'Pedro', 'Perez', 28, 12434.1),
@@ -77,13 +78,13 @@ INSERT INTO `empleados` (`idempleado`, `fkiddepartamento`, `nombre`, `apellido`,
 --
 -- Indices de la tabla `departamentos`
 --
-ALTER TABLE `departamentos`
+ALTER TABLE `Lizzie_Castro_db`.`departamentos`
   ADD PRIMARY KEY (`iddepartamento`);
 
 --
 -- Indices de la tabla `empleados`
 --
-ALTER TABLE `empleados`
+ALTER TABLE `Lizzie_Castro_db`.`empleados`
   ADD PRIMARY KEY (`idempleado`),
   ADD KEY `empleados_ibfk_1` (`fkiddepartamento`);
 
@@ -94,13 +95,13 @@ ALTER TABLE `empleados`
 --
 -- AUTO_INCREMENT de la tabla `departamentos`
 --
-ALTER TABLE `departamentos`
+ALTER TABLE `Lizzie_Castro_db`.`departamentos`
   MODIFY `iddepartamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `empleados`
 --
-ALTER TABLE `empleados`
+ALTER TABLE `Lizzie_Castro_db`.`empleados`
   MODIFY `idempleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
@@ -110,7 +111,7 @@ ALTER TABLE `empleados`
 --
 -- Filtros para la tabla `empleados`
 --
-ALTER TABLE `empleados`
+ALTER TABLE `Lizzie_Castro_db`.`empleados`
   ADD CONSTRAINT `empleados_ibfk_1` FOREIGN KEY (`fkiddepartamento`) REFERENCES `departamentos` (`iddepartamento`) ON DELETE SET NULL ON UPDATE CASCADE;
 COMMIT;
 
